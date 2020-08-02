@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.micro</groupId>
-	<artifactId>SpringMongo</artifactId>
+	<artifactId>SpringMongoWatcher</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringMongo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>SpringMongoWatcher</name>
+	<description>Demo project for SpringMongoWatcher</description>
 
 	<properties>
 		<java.version>8</java.version>
@@ -21,14 +21,17 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
-
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
