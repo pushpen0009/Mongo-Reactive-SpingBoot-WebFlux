@@ -1,5 +1,7 @@
 package com.micro.secureapp;
 
+import java.util.UUID;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -190,12 +192,12 @@ public class SpringMongoApplication {
 					Flux  
 					.just(data)  
 					.map(array -> {  
-						return new User((String) (Math.random()+""+array[0]), (String) array[1]);  
+						return new User(UUID.randomUUID(), array[0]+" "+array[1]);  
 					})  
 					.flatMap(repository::save)  
 					)  
 			.thenMany(repository.findAll())  
-			.subscribe(kayak -> System.out.println("saving " + kayak.toString()));
+			.subscribe(kayak -> System.out.println("Saved " + kayak.toString()));
 		};  
 	}
 
