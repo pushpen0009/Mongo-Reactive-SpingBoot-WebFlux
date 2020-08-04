@@ -1,6 +1,7 @@
 package com.micro.secureapp.controller;
 
 import java.time.Duration;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,7 @@ public class UserController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public Mono<String> addNewUsers(@RequestBody User user) {
 		LOG.info("Saving user.");
+		user.set_id(UUID.randomUUID());
 		return userRepository.save(user).map(g -> "Saved: " + g.getName());
 	}
 

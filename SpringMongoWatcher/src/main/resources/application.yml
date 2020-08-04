@@ -1,7 +1,7 @@
 spring:
    data:
       mongodb:
-         uri: mongodb+srv://pushpendra:EdL8YuatVzY7j5K@reachoutcluster-kalmu.mongodb.net/pushpendra_demo?retryWrites=true&w=majority
+         uri: mongodb://localhost:27017/userdb?replicaSet=rs01
 
 logging:
   level:

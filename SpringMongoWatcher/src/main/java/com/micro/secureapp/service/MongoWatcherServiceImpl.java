@@ -55,7 +55,7 @@ public class MongoWatcherServiceImpl implements MongoWatcherService {
 		CodecRegistry defaultCodecRegistry = MongoClientSettings.getDefaultCodecRegistry();
 	    CodecRegistry fromProvider = CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build());
 	    CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(defaultCodecRegistry, fromProvider);
-		database = mongoClient .getDatabase("pushpendra_demo").withCodecRegistry(pojoCodecRegistry);
+		database = mongoClient .getDatabase("userdb").withCodecRegistry(pojoCodecRegistry);
 		collection = database.getCollection("user");
 		log.debug("Documents exists : {}",collection.countDocuments());
 	}

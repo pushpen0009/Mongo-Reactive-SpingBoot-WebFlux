@@ -1,0 +1,58 @@
+version: '3.2'
+services:
+
+ mongo-rs1:
+    image: mongo:4.0
+    restart: unless-stopped
+    ports:
+      - 27018:27017
+    environment:
+      - MONGODB_REPLICA_SET_MODE=primary
+    volumes:
+      - 'data_rs01:/data/db'
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+
+ mongo-rs2:
+    image: mongo:4.0
+    restart: unless-stopped
+    ports:
+      - 27019:27017
+    environment:
+      - MONGODB_REPLICA_SET_MODE=secondary
+    volumes:
+      - 'data_rs02:/data/db'
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+
+ mongo-arb:
+    image: mongo:4.0
+    restart: unless-stopped
+    ports:
+      - 27020:27017
+    environment:
+      - MONGODB_REPLICA_SET_MODE=arbiter
+    command: mongod --smallfiles --oplogSize 128 --replSet rs0 --storageEngine=mmapv1
+
+ mongo-init-replica:
+    image: mongo:4.0
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo-rs1/userdb --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'localhost:27018' },
+                         { _id: 1, host: 'localhost:27019' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo-rs1
+      - mongo-rs2
+      - mongo-arb
+      
+volumes:
+  data_rs01:
+    driver: local
+  data_rs02:
+    driver: local
